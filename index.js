@@ -18,11 +18,15 @@ var userRoute = require('./routes/userRoute');
 var postRoute = require('./routes/postRoute');
 var friendNotificationRoute = require('./routes/friendNotificationRoute');
 
-
 var app = express();
 
 // CORS
 app.use(cors())
+//app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 //swagger
 const swaggerUi = require('swagger-ui-express');
@@ -33,11 +37,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-//app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 //connect database
 mongoose.connect('mongodb+srv://thong442001:F3WK9R2BOb3cV86h@totnghiep.8wwlj.mongodb.net/totNghiep')//link connect vs mongobd
     .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
@@ -48,7 +47,6 @@ app.use('/', indexRouter);
 app.use('/user', userRoute);
 app.use('/post', postRoute);
 app.use('/friendNotification', friendNotificationRoute);
-
 
 // // catch 404 and forward to error handler
 // app.use(function (req, res, next) {
