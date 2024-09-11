@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //swagger
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-config.js');
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.get('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 app.use('/', indexRouter);

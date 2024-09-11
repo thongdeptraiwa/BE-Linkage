@@ -23,5 +23,3 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 module.exports = swaggerSpec;
 
-//link
-//http://localhost:3000/
