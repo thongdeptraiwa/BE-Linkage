@@ -18,7 +18,8 @@ const options = {
       }
     },
   },
-  apis: ['./routes/*.js'], // Đường dẫn đến các file định nghĩa API
+  // Đường dẫn đến các file định nghĩa API
+  apis: ['./routes/*.js'],
 };
 const swaggerSpec = swaggerJSDoc(options);
 module.exports = swaggerSpec;
