@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //swagger
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-config.js');
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,7 +42,7 @@ mongoose.connect('mongodb+srv://thong442001:F3WK9R2BOb3cV86h@totnghiep.8wwlj.mon
     .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
     .catch(err => console.log('>>>>>>>>> DB Error: ', err));
 
-app.use('/', indexRouter);
+app.use('/index', indexRouter);
 //mogo
 app.use('/user', userRoute);
 app.use('/post', postRoute);
