@@ -35,7 +35,15 @@ app.set('view engine', 'hbs');
 //swagger
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-config.js');
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// CDN CSS
+const CSS_URL =
+    "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument, { customCssUrl: CSS_URL })
+);
 
 //connect database
 mongoose.connect('mongodb+srv://thong442001:F3WK9R2BOb3cV86h@totnghiep.8wwlj.mongodb.net/totNghiep')//link connect vs mongobd
