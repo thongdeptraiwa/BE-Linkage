@@ -3,6 +3,8 @@ const express = require("express");
 var path = require('path');
 var cookieParser = require('cookie-parser');
 //var logger = require('morgan');
+// CORS
+var cors = require('cors')
 
 //config mongoose
 const mongoose = require("mongoose");
@@ -16,7 +18,11 @@ var userRoute = require('./routes/userRoute');
 var postRoute = require('./routes/postRoute');
 var friendNotificationRoute = require('./routes/friendNotificationRoute');
 
+
 var app = express();
+
+// CORS
+app.use(cors())
 
 //swagger
 const swaggerUi = require('swagger-ui-express');
