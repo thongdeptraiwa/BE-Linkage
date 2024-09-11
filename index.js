@@ -5,8 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 //config mongoose
-const connectDB = require("./connectMongoo");
-connectDB();
+// const connectDB = require("./connectMongoo");
+// connectDB();
+//config mongoose
+const mongoose = require("mongoose");
+require("./models/user");
+require("./models/post");
+require("./models/friendNotification");
 
 
 var indexRouter = require('./routes/index');
@@ -17,17 +22,24 @@ var friendNotificationRoute = require('./routes/friendNotificationRoute');
 
 var app = express();
 
+//swagger
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-config.js');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-//swagger
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger-config.js');
-app.get('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+//connect database
+mongoose.connect('mongodb+srv://thong442001:F3WK9R2BOb3cV86h@totnghiep.8wwlj.mongodb.net/totNghiep')//link connect vs mongobd
+    .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
+    .catch(err => console.log('>>>>>>>>> DB Error: ', err));
 
 app.use('/', indexRouter);
 //mogo
@@ -51,8 +63,6 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-//app.get("/", (req, res) => res.send("Express on Vercel"));
 app.listen(3000, () => console.log("Server ready on port 3000."));
-
 
 module.exports = app;
