@@ -5,16 +5,16 @@ var cookieParser = require('cookie-parser');
 //var logger = require('morgan');
 
 //config mongoose
-const mongoose = require("mongoose");
-require("./models/user");
-require("./models/post");
-require("./models/friendNotification");
+// const mongoose = require("mongoose");
+// require("./models/user");
+// require("./models/post");
+// require("./models/friendNotification");
 
 var indexRouter = require('./routes/index');
 //mogo
-var userRoute = require('./routes/userRoute');
-var postRoute = require('./routes/postRoute');
-var friendNotificationRoute = require('./routes/friendNotificationRoute');
+// var userRoute = require('./routes/userRoute');
+// var postRoute = require('./routes/postRoute');
+// var friendNotificationRoute = require('./routes/friendNotificationRoute');
 
 var app = express();
 
@@ -31,16 +31,16 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 //connect database
-mongoose.connect('mongodb+srv://thong442001:F3WK9R2BOb3cV86h@totnghiep.8wwlj.mongodb.net/totNghiep')//link connect vs mongobd
-    .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
-    .catch(err => console.log('>>>>>>>>> DB Error: ', err));
+// mongoose.connect('mongodb+srv://thong442001:F3WK9R2BOb3cV86h@totnghiep.8wwlj.mongodb.net/totNghiep')//link connect vs mongobd
+//     .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
+//     .catch(err => console.log('>>>>>>>>> DB Error: ', err));
 
 
 app.use('/', indexRouter);
 //mogo
-app.use('/user', userRoute);
-app.use('/post', postRoute);
-app.use('/friendNotification', friendNotificationRoute);
+// app.use('/user', userRoute);
+// app.use('/post', postRoute);
+// app.use('/friendNotification', friendNotificationRoute);
 
 
 // // catch 404 and forward to error handler
