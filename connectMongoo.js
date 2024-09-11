@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-require("./models/user");
-require("./models/post");
-require("./models/friendNotification");
+// require("./models/user");
+// require("./models/post");
+// require("./models/friendNotification");
 const config = require("./config");
 
 const connectDB = async () => {

@@ -14,9 +14,9 @@ connectDB();
 
 var indexRouter = require('./routes/index');
 //mogo
-var userRoute = require('./routes/userRoute');
-var postRoute = require('./routes/postRoute');
-var friendNotificationRoute = require('./routes/friendNotificationRoute');
+// var userRoute = require('./routes/userRoute');
+// var postRoute = require('./routes/postRoute');
+// var friendNotificationRoute = require('./routes/friendNotificationRoute');
 
 var app = express();
 
@@ -41,9 +41,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/', indexRouter);
 //mogo
-app.use('/user', userRoute);
-app.use('/post', postRoute);
-app.use('/friendNotification', friendNotificationRoute);
+// app.use('/user', userRoute);
+// app.use('/post', postRoute);
+// app.use('/friendNotification', friendNotificationRoute);
 
 
 // // catch 404 and forward to error handler
