@@ -5,9 +5,9 @@ var cookieParser = require('cookie-parser');
 //var logger = require('morgan');
 
 //config mongoose
-const connectDB = require("./connectMongoo");
-connectDB();
-// const mongoose = require("mongoose");
+// const connectDB = require("./connectMongoo");
+// connectDB();
+const mongoose = require("mongoose");
 // require("./models/user");
 // require("./models/post");
 // require("./models/friendNotification");
@@ -33,9 +33,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 //connect database
-// mongoose.connect('mongodb+srv://thong442001:F3WK9R2BOb3cV86h@totnghiep.8wwlj.mongodb.net/totNghiep')//link connect vs mongobd
-//     .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
-//     .catch(err => console.log('>>>>>>>>> DB Error: ', err));
+//mongodb+srv://thong442001:F3WK9R2BOb3cV86h@totnghiep.8wwlj.mongodb.net/?retryWrites=true&w=majority&appName=totNghiep
+mongoose.connect('mongodb+srv://thong442001:F3WK9R2BOb3cV86h@totnghiep.8wwlj.mongodb.net/?retryWrites=true&w=majority&appName=totNghiep')//link connect vs mongobd
+    .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
+    .catch(err => console.log('>>>>>>>>> DB Error: ', err));
 
 
 app.use('/', indexRouter);
