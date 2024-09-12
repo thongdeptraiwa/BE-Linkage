@@ -328,8 +328,8 @@ router.post('/addFriend', checkToken, async function (req, res, next) {
     const { friendNotificationId } = req.body;
     // lấy userId, friendId của friendNotification
     const twoPeople = await friendNotificationController.getFromAndTo(friendNotificationId);
-    const userId = twoPeople.from;
-    const friendId = twoPeople.to;
+    const userId = twoPeople.to;
+    const friendId = twoPeople.from;
     // xóa friendNotification trong user 
     const remoteFriendNotificationInUser = await userController.deleteFriendNotificationInUser(userId, friendNotificationId);
     // xóa friendNotification trong friendNotifications 
