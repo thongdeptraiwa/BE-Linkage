@@ -12,9 +12,9 @@ const checkToken = require("./checkToken");
 //http://localhost:3000/friendNotification/checkFriendNotification
 router.post('/checkFriendNotification', checkToken, async function (req, res, next) {
   try {
-    const { form, to } = req.body;
+    const { from, to } = req.body;
     //check friendNotification đã tồn tại chưa
-    const check = await friendNotificationController.checkFriendNotification(form, to);
+    const check = await friendNotificationController.checkFriendNotification(from, to);
     if (check) {
       // lời mời kết bạn chưa tồn tại
       res.status(200).json({ "status": true, "message": "Thêm bạn bè hoặc Chấp nhận" });
@@ -32,15 +32,15 @@ router.post('/checkFriendNotification', checkToken, async function (req, res, ne
 //http://localhost:3000/friendNotification/add
 router.post('/add', checkToken, async function (req, res, next) {
   try {
-    const { form, to } = req.body;
+    const { from, to } = req.body;
     //check friendNotification đã tồn tại chưa
-    const check = await friendNotificationController.checkFriendNotification(form, to);
+    const check = await friendNotificationController.checkFriendNotification(from, to);
     if (check) {
       //chưa tồn tại thì add vào
       //lấy displayName vs avatar form
-      const nameAndAvatar = await userController.getNameAndAvatar(form);
+      const nameAndAvatar = await userController.getNameAndAvatar(from);
       //add friendNotification mới trong friendNotification
-      const friendNotification = await friendNotificationController.addFriendNotification(form,
+      const friendNotification = await friendNotificationController.addFriendNotification(from,
         to,
         nameAndAvatar.displayName,
         nameAndAvatar.avatar,

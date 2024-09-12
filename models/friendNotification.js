@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 const friendNotification = new Schema({
     id: { type: ObjectId }, // khóa chính
-    form: {
+    from: {
         type: ObjectId,
         ref: 'user',
         required: true, // bắt buộc phải có
@@ -20,6 +20,14 @@ const friendNotification = new Schema({
     avatar: {
         type: String, // kiểu dữ liệu
         default: null,
+    },
+    state: {
+        type: Boolean, // kiểu dữ liệu
+        default: false
+    },
+    createdAt: {
+        type: Date, // kiểu dữ liệu
+        default: Date.now()
     },
 });
 module.exports = mongoose.models.friendNotification || mongoose.model('friendNotification', friendNotification);

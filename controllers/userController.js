@@ -49,7 +49,7 @@ async function getRoleUser() {
 async function getUsersDisplayName(displayName) {
     try {
         //search displayName của các users ( trừ admin)
-        const list = await users.find({ "displayName": displayName, "role": false }, " _id displayName avatar");
+        const list = await users.find({ "displayName": displayName, "role": false }, " _id displayName avatar").po;
         return list;
     } catch (error) {
         console.log(error);
@@ -76,7 +76,7 @@ async function addUser(body) {
 async function login(body) {
     try {
         const { email, password } = body;
-        const check_username = await users.findOne({ "email": email });
+        const check_username = await users.findOne({ "email": email }).populate("posts").populate("friendNotifications");
 
         if (check_username) {
             const ssPassword = bcrypt.compareSync(password, check_username.password);

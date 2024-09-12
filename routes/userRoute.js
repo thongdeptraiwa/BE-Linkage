@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-const userController = require("../controllers/userController")
+const userController = require("../controllers/userController");
+const friendNotificationController = require("../controllers/friendNotificationController")
 
 //token
 const JWT = require('jsonwebtoken');
@@ -324,7 +325,15 @@ router.post('/delete', checkToken, async function (req, res, next) {
 //http://localhost:3000/user/addFriend
 router.post('/addFriend', checkToken, async function (req, res, next) {
   try {
-    const { userId, friendId } = req.body;
+    const { friendNotificationId } = req.body;
+    // lấy userId, friendId của friendNotification
+    const twoPeople = await friendNotificationController.getFromAndTo(friendNotificationId);
+    const userId = twoPeople.from;
+    const friendId = twoPeople.to;
+    // xóa friendNotification trong user 
+    const remoteFriendNotificationInUser = await userController.deleteFriendNotificationInUser(userId, friendNotificationId);
+    // xóa friendNotification trong friendNotifications 
+    const result = await friendNotificationController.deleteFriendNotification(friendNotificationId);
     // add friend in user
     const user = await userController.addFriendInUser(userId, friendId);
     // add friend in friend
