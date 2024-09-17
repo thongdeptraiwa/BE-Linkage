@@ -11,7 +11,10 @@ module.exports = {
     getRoleUser,
     getUsersDisplayName,
     addUser,
-    login,
+    addAdmin,
+    addManage,
+    loginApp,
+    loginWeb,
     editUser,
     deleteUser,
     checkUserId,//chung
@@ -38,7 +41,7 @@ async function getAllUsers() {
 // search 
 async function getRoleUser() {
     try {
-        const list = await users.find({ "role": false }, " _id displayName avatar");
+        const list = await users.find({ "role": 3 }, " _id displayName avatar");
         return list;
     } catch (error) {
         console.log(error);
@@ -49,7 +52,7 @@ async function getRoleUser() {
 async function getUsersDisplayName(displayName) {
     try {
         //search displayName của các users ( trừ admin)
-        const list = await users.find({ "displayName": displayName, "role": false }, " _id displayName avatar").po;
+        const list = await users.find({ "displayName": displayName, "role": 3 }, " _id displayName avatar");
         return list;
     } catch (error) {
         console.log(error);
@@ -61,33 +64,97 @@ async function addUser(body) {
     try {
         const { email, password, displayName } = body;
         var hashPass = bcrypt.hashSync(password, 10);
-        const newItem = { email, password: hashPass, displayName };
+        const newItem = { email, password: hashPass, displayName, role: 3 };
         if (newItem) {
             await users.create(newItem);
             return true;
         }
-
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+async function addAdmin(body) {
+    try {
+        const { email, password, displayName } = body;
+        var hashPass = bcrypt.hashSync(password, 10);
+        const newItem = { email, password: hashPass, displayName, role: 1 };
+        if (newItem) {
+            await users.create(newItem);
+            return true;
+        }
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+async function addManage(body) {
+    try {
+        const { email, password, displayName } = body;
+        var hashPass = bcrypt.hashSync(password, 10);
+        const newItem = { email, password: hashPass, displayName, role: 2 };
+        if (newItem) {
+            await users.create(newItem);
+            return true;
+        }
     } catch (error) {
         console.log(error);
         return false;
     }
 }
 
-async function login(body) {
+async function loginApp(body) {
     try {
         const { email, password } = body;
-        const check_username = await users.findOne({ "email": email }).populate("posts").populate("friendNotifications");
+        const check_username = await users.findOne({ "email": email });
 
         if (check_username) {
             const ssPassword = bcrypt.compareSync(password, check_username.password);
             if (ssPassword) {
+                //check role
+                if (check_username.role == 3) {
+                    //token
+                    const token = JWT.sign({ email: email, data: "data ne" }, config.SECRETKEY, { expiresIn: '30s' });
+                    const refreshToken = JWT.sign({ email: email }, config.SECRETKEY, { expiresIn: '1d' })
 
-                //token
-                const token = JWT.sign({ email: email, data: "data ne" }, config.SECRETKEY, { expiresIn: '30s' });
-                const refreshToken = JWT.sign({ email: email }, config.SECRETKEY, { expiresIn: '1d' })
+                    //res.status(200).json({ "status": true, "user": check_username, token: token, refreshToken: refreshToken });
+                    return { "status": 200, "user": check_username, token: token, refreshToken: refreshToken };
+                } else {
+                    return { "status": 403, "message": "Tạo khoản không phải user" };
+                }
+            } else {
+                //res.status(401).json({ "status": false, "message": "sai mật khẩu" });
+                return { "status": 402, "message": "sai mật khẩu" };
+            }
+        } else {
+            //res.status(402).json({ "status": false, "message": "sai tài khoản " });
+            return { "status": 401, "message": "sai tài khoản" };
+        }
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
 
-                //res.status(200).json({ "status": true, "user": check_username, token: token, refreshToken: refreshToken });
-                return { "status": 200, "user": check_username, token: token, refreshToken: refreshToken };
+async function loginWeb(body) {
+    try {
+        const { email, password } = body;
+        const check_username = await users.findOne({ "email": email });
+
+        if (check_username) {
+            const ssPassword = bcrypt.compareSync(password, check_username.password);
+            if (ssPassword) {
+                //check role
+                if (check_username.role == 1 || check_username.role == 2) {
+                    //token
+                    const token = JWT.sign({ email: email, data: "data ne" }, config.SECRETKEY, { expiresIn: '30s' });
+                    const refreshToken = JWT.sign({ email: email }, config.SECRETKEY, { expiresIn: '1d' })
+
+                    //res.status(200).json({ "status": true, "user": check_username, token: token, refreshToken: refreshToken });
+                    return { "status": 200, "user": check_username, token: token, refreshToken: refreshToken };
+                } else {
+                    return { "status": 403, "message": "Tạo khoản không phải admin hoặc manage" };
+                }
             } else {
                 //res.status(401).json({ "status": false, "message": "sai mật khẩu" });
                 return { "status": 402, "message": "sai mật khẩu" };
@@ -115,7 +182,7 @@ async function deleteUser(body) {
 
 async function editUser(body) {
     try {
-        const { email, password, avatar, displayName, phoneNumber, birthday } = body;
+        const { email, password, avatar, displayName } = body;
         const itemEdit = await users.findOne({ "email": email });
         var hashPass = bcrypt.hashSync(password, 10);
         if (itemEdit) {
@@ -123,8 +190,8 @@ async function editUser(body) {
             itemEdit.password = hashPass ? hashPass : itemEdit.password;
             itemEdit.avatar = avatar ? avatar : itemEdit.avatar;
             itemEdit.displayName = displayName ? displayName : itemEdit.displayName;
-            itemEdit.phoneNumber = phoneNumber ? phoneNumber : itemEdit.phoneNumber;
-            itemEdit.birthday = birthday ? birthday : itemEdit.birthday;
+            // itemEdit.phoneNumber = phoneNumber ? phoneNumber : itemEdit.phoneNumber;
+            // itemEdit.birthday = birthday ? birthday : itemEdit.birthday;
             await itemEdit.save();
 
             // chỉnh name và avatar của posts

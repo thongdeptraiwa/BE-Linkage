@@ -53,7 +53,7 @@ router.post("/refreshToken", async function (req, res, next) {
 
 /**
  * @swagger
- * /user/add:
+ * /user/addUser:
  *   post:
  *     tags:
  *     - users
@@ -86,9 +86,9 @@ router.post("/refreshToken", async function (req, res, next) {
  *       401:
  *         description: Tài khoản đã tồn tại
  */
-//add  
-//http://localhost:3000/user/add
-router.post('/add', async function (req, res, next) {
+//addUser  
+//http://localhost:3000/user/addUser
+router.post('/addUser', async function (req, res, next) {
   try {
     const body = req.body;
     const result = await userController.addUser(body);
@@ -103,9 +103,41 @@ router.post('/add', async function (req, res, next) {
   }
 });
 
+//addAdmin  
+//http://localhost:3000/user/addAdmin
+router.post('/addAdmin', async function (req, res, next) {
+  try {
+    const body = req.body;
+    const result = await userController.addAdmin(body);
+    if (result) {
+      res.status(200).json({ "status": true, "message": "Đăng kí thành công" });
+    } else {
+      res.status(401).json({ "status": false, "message": "Tài khoản đã tồn tại" });
+    }
+  } catch (e) {
+    res.status(400).json({ "status": false, "message": "lỗi" });
+  }
+});
+
+//addManage  
+//http://localhost:3000/user/addManage
+router.post('/addManage', async function (req, res, next) {
+  try {
+    const body = req.body;
+    const result = await userController.addManage(body);
+    if (result) {
+      res.status(200).json({ "status": true, "message": "Đăng kí thành công" });
+    } else {
+      res.status(401).json({ "status": false, "message": "Tài khoản đã tồn tại" });
+    }
+  } catch (e) {
+    res.status(400).json({ "status": false, "message": "lỗi" });
+  }
+});
+
 /**
  * @swagger
- * /user/login:
+ * /user/loginApp:
  *   post:
  *     tags:
  *     - users
@@ -136,12 +168,12 @@ router.post('/add', async function (req, res, next) {
  *       402:
  *         description: sai mật khẩu
  */
-//Login  
-//http://localhost:3000/user/login
-router.post('/login', async function (req, res, next) {
+//loginApp  
+//http://localhost:3000/user/loginApp
+router.post('/loginApp', async function (req, res, next) {
   try {
     const body = req.body;
-    const result = await userController.login(body);
+    const result = await userController.loginApp(body);
     if (result.status == 200) {
       res.status(200).json({ "status": true, "token": result.token, "refreshToken": result.refreshToken, "user": result.user });
     } else if (result.status == 401) {
@@ -150,12 +182,37 @@ router.post('/login', async function (req, res, next) {
     } else if (result.status == 402) {
       //sai mật khẩu 
       res.status(402).json({ "status": false, "message": result.message });
+    } else if (result.status == 403) {
+      //sai mật khẩu 
+      res.status(403).json({ "status": false, "message": result.message });
     }
   } catch (e) {
     res.status(400).json({ "status": false, "message": "lỗi" });
   }
 });
 
+//loginWeb  
+//http://localhost:3000/user/loginWeb
+router.post('/loginWeb', async function (req, res, next) {
+  try {
+    const body = req.body;
+    const result = await userController.loginWeb(body);
+    if (result.status == 200) {
+      res.status(200).json({ "status": true, "token": result.token, "refreshToken": result.refreshToken, "user": result.user });
+    } else if (result.status == 401) {
+      //sai tài khoản 
+      res.status(401).json({ "status": false, "message": result.message });
+    } else if (result.status == 402) {
+      //sai mật khẩu 
+      res.status(402).json({ "status": false, "message": result.message });
+    } else if (result.status == 403) {
+      //sai mật khẩu 
+      res.status(403).json({ "status": false, "message": result.message });
+    }
+  } catch (e) {
+    res.status(400).json({ "status": false, "message": "lỗi" });
+  }
+});
 
 /**
  * @swagger
