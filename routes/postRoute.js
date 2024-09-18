@@ -72,7 +72,7 @@ router.post('/add', checkToken, async function (req, res, next) {
 // http://localhost:3000/post/getMyPosts
 router.get('/getMyPosts', checkToken, async function (req, res, next) {
   try {
-    const { userId } = req.body;
+    const { userId } = req.query;
     const list = await postController.getMyPosts(userId);
     res.status(200).json({ "status": true, "posts": list });
   } catch (e) {

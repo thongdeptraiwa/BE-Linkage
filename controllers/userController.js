@@ -114,7 +114,7 @@ async function loginApp(body) {
                 //check role
                 if (check_username.role == 3) {
                     //token
-                    const token = JWT.sign({ email: email, data: "data ne" }, config.SECRETKEY, { expiresIn: '30s' });
+                    const token = JWT.sign({ email: email, data: "data ne" }, config.SECRETKEY, { expiresIn: '60s' });
                     const refreshToken = JWT.sign({ email: email }, config.SECRETKEY, { expiresIn: '1d' })
 
                     //res.status(200).json({ "status": true, "user": check_username, token: token, refreshToken: refreshToken });
@@ -147,7 +147,7 @@ async function loginWeb(body) {
                 //check role
                 if (check_username.role == 1 || check_username.role == 2) {
                     //token
-                    const token = JWT.sign({ email: email, data: "data ne" }, config.SECRETKEY, { expiresIn: '30s' });
+                    const token = JWT.sign({ email: email, data: "data ne" }, config.SECRETKEY, { expiresIn: '60s' });
                     const refreshToken = JWT.sign({ email: email }, config.SECRETKEY, { expiresIn: '1d' })
 
                     //res.status(200).json({ "status": true, "user": check_username, token: token, refreshToken: refreshToken });
