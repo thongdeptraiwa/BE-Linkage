@@ -7,12 +7,12 @@ const post = new Schema({
         type: ObjectId,
         ref: 'user',
     },
-    displayName: {
-        type: String, // kiểu dữ liệu
-    },
-    avatar: {
-        type: String, // kiểu dữ liệu
-    },
+    // displayName: {
+    //     type: String, // kiểu dữ liệu
+    // },
+    // avatar: {
+    //     type: String, // kiểu dữ liệu
+    // },
     content: {
         type: String, // kiểu dữ liệu
         default: null
@@ -21,49 +21,24 @@ const post = new Schema({
         type: String, // kiểu dữ liệu
         default: null
     }],
+    status: {
+        type: Number, // kiểu dữ liệu
+        // 0 xoá (vào thùng rác)
+        // 1 công khai
+        // 2 bạn bè
+        // 3 chỉ mình tôi
+    },
     likes: [{
-        userId: {
-            type: ObjectId,
-            ref: 'user',
-        },
-        displayName: {
-            type: String,
-        },
-        avatar: {
-            type: String,
-        },
-        type: {
-            type: String,
-        }
+        type: ObjectId,
+        ref: 'user',
     }],
     comments: [{
-        userId: {
-            type: ObjectId,
-            ref: 'user',
-        },
-        displayName: {
-            type: String,
-        },
-        avatar: {
-            type: String,
-        },
-        content: {
-            type: String,
-        },
-        createdAt: {
-            type: Date, // kiểu dữ liệu
-            default: Date.now()
-        }
+        type: ObjectId,
+        ref: 'comment',
     }],
     createdAt: {
         type: Date, // kiểu dữ liệu
         default: Date.now()
-    },
-    destroy: {
-        type: Boolean, // kiểu dữ liệu
-        default: false,
-        // false: còn  
-        // true: xóa
     },
 });
 module.exports = mongoose.models.post || mongoose.model('post', post);

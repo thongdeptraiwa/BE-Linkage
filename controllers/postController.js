@@ -1,6 +1,7 @@
 const posts = require("../models/post");
 
 module.exports = {
+    getMyPosts,
     getAllPostsUserId,
     getPostsUserIdDestroyFalse,
     getPostsUserIdDestroyTrue,
@@ -40,14 +41,27 @@ async function getPostsUserIdDestroyTrue(userId) {
     }
 }
 
-async function addPost(userId, displayName, avatar, content, images) {
+// posts trong trang cá nhân của tôi
+async function getMyPosts(userId) {
+    try {
+        const result = await posts.find({ "userId": userId, "status": { $ne: 0 } })//$ne -> !=
+            .populate("userId", "displayName avatar");
+        return result;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+async function addPost(userId, content, images, status) {
     try {
         const newItem = {
             userId,
-            displayName,
-            avatar,
+            // displayName,
+            // avatar,
             content,
-            images
+            images,
+            status,
         };
         const newPost = await posts.create(newItem);
         //console.log(newPost);

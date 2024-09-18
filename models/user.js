@@ -28,29 +28,39 @@ const user = new Schema({
     //     type: String, // kiểu dữ liệu
     //     default: null,
     // },
-    isActive: {
-        type: Boolean, // kiểu dữ liệu
-        default: true, // mặc định
+    status: {
+        type: Number, // kiểu dữ liệu
+        default: 1,
+        // 0 bị khoá
+        // 1 mặc định
+        // 2 riêng tư
     },
     role: {
         type: Number, // kiểu dữ liệu
         // 1: admin 
         // 2: manage
         // 3: user
-        // -1: khoá user
     },
-    posts: [{
-        type: ObjectId,
-        ref: 'post',
-    }],
+    // posts: [{
+    //     type: ObjectId,
+    //     ref: 'post',
+    // }],
     friends: [{
         type: ObjectId,
         ref: 'user',
     }],
-    notifications: [{
+    blocks: [{
         type: ObjectId,
-        ref: 'notification',
+        ref: 'user',
     }],
+    createdAt: {
+        type: Date, // kiểu dữ liệu
+        default: Date.now()
+    },
+    // notifications: [{
+    //     type: ObjectId,
+    //     ref: 'notification',
+    // }],
     // friendNotifications: [{
     //     type: ObjectId,
     //     ref: 'friendNotification',

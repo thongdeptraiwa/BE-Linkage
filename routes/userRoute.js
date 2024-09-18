@@ -316,20 +316,20 @@ router.get('/getUsersDisplayName', checkToken, async function (req, res, next) {
  */
 //edit 
 //http://localhost:3000/user/edit
-router.post('/edit', checkToken, async function (req, res, next) {
-  try {
-    const body = req.body;
-    const result = await userController.editUser(body);
-    if (result) {
-      res.status(200).json({ "status": true, "mess": "edit thành công", "user": result });
-    } else {
-      res.status(401).json({ "status": false, "mess": "Không tìm thấy user" });
-    }
+// router.post('/edit', checkToken, async function (req, res, next) {
+//   try {
+//     const body = req.body;
+//     const result = await userController.editUser(body);
+//     if (result) {
+//       res.status(200).json({ "status": true, "mess": "edit thành công", "user": result });
+//     } else {
+//       res.status(401).json({ "status": false, "mess": "Không tìm thấy user" });
+//     }
 
-  } catch (e) {
-    res.status(400).json({ "status": false, "message": "lỗi" });
-  }
-});
+//   } catch (e) {
+//     res.status(400).json({ "status": false, "message": "lỗi" });
+//   }
+// });
 
 
 /**
@@ -363,44 +363,44 @@ router.post('/edit', checkToken, async function (req, res, next) {
  */
 //delete
 //http://localhost:3000/user/delete
-router.post('/delete', checkToken, async function (req, res, next) {
-  try {
-    const body = req.body;
-    const result = await userController.deleteUser(body);
-    if (result) {
-      res.status(200).json({ "status": true, "mess": "delete thành công" });
-    } else {
-      res.status(401).json({ "status": false, "mess": "Không tìm thấy user" });
-    }
+// router.post('/delete', checkToken, async function (req, res, next) {
+//   try {
+//     const body = req.body;
+//     const result = await userController.deleteUser(body);
+//     if (result) {
+//       res.status(200).json({ "status": true, "mess": "delete thành công" });
+//     } else {
+//       res.status(401).json({ "status": false, "mess": "Không tìm thấy user" });
+//     }
 
-  } catch (e) {
-    res.status(400).json({ "status": false, "message": "lỗi" });
-  }
-});
+//   } catch (e) {
+//     res.status(400).json({ "status": false, "message": "lỗi" });
+//   }
+// });
 
 //chấp nhận lời mời kết bạn
 //http://localhost:3000/user/addFriend
-router.post('/addFriend', checkToken, async function (req, res, next) {
-  try {
-    const { friendNotificationId } = req.body;
-    // lấy userId, friendId của friendNotification
-    const twoPeople = await friendNotificationController.getFromAndTo(friendNotificationId);
-    const userId = twoPeople.to;
-    const friendId = twoPeople.from;
-    // xóa friendNotification trong user 
-    const remoteFriendNotificationInUser = await userController.deleteFriendNotificationInUser(userId, friendNotificationId);
-    // xóa friendNotification trong friendNotifications 
-    const result = await friendNotificationController.deleteFriendNotification(friendNotificationId);
-    // add friend in user
-    const user = await userController.addFriendInUser(userId, friendId);
-    // add friend in friend
-    const friend = await userController.addFriendInUser(friendId, userId);
-    res.status(200).json({ "status": true, "mess": "add friend thành công" });
+// router.post('/addFriend', checkToken, async function (req, res, next) {
+//   try {
+//     const { friendNotificationId } = req.body;
+//     // lấy userId, friendId của friendNotification
+//     const twoPeople = await friendNotificationController.getFromAndTo(friendNotificationId);
+//     const userId = twoPeople.to;
+//     const friendId = twoPeople.from;
+//     // xóa friendNotification trong user 
+//     const remoteFriendNotificationInUser = await userController.deleteFriendNotificationInUser(userId, friendNotificationId);
+//     // xóa friendNotification trong friendNotifications 
+//     const result = await friendNotificationController.deleteFriendNotification(friendNotificationId);
+//     // add friend in user
+//     const user = await userController.addFriendInUser(userId, friendId);
+//     // add friend in friend
+//     const friend = await userController.addFriendInUser(friendId, userId);
+//     res.status(200).json({ "status": true, "mess": "add friend thành công" });
 
-  } catch (e) {
-    res.status(400).json({ "status": false, "message": "lỗi" });
-  }
-});
+//   } catch (e) {
+//     res.status(400).json({ "status": false, "message": "lỗi" });
+//   }
+// });
 
 
 
