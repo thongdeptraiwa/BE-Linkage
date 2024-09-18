@@ -45,7 +45,10 @@ async function getPostsUserIdDestroyTrue(userId) {
 async function getMyPosts(userId) {
     try {
         const result = await posts.find({ "userId": userId, "status": { $ne: 0 } })//$ne -> !=
-            .populate("userId", "displayName avatar");
+            .populate("userId", "displayName avatar")// FK
+            .sort({ 'createdAt': -1 });// xếp sắp (1->tăng dần) (-1->giảm dần)
+
+
         return result;
     } catch (error) {
         console.log(error);

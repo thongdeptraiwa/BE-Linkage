@@ -152,32 +152,32 @@ router.get('/getMyPosts', checkToken, async function (req, res, next) {
 
 //Home ( posts of user and user's friends )
 //http://localhost:3000/post/getHome
-// router.get('/getHome', checkToken, async function (req, res, next) {
-//   try {
-//     const { userId } = req.body;
-//     // get friends in user
-//     const listUsers = await userController.getFriendsInUser(userId);
-//     listUsers.push(userId);
-//     //console.log(listUsers);
-//     // get posts of listUsers
-//     var posts = new Array();
-//     // async/await ko dùng đc trong foEach 
-//     // nên phải dùng for ... of
-//     for (const item of listUsers) {
-//       let postsOfe = await postController.getPostsUserIdDestroyFalse(item);
-//       // nối arr lại vs nhau
-//       posts = posts.concat(postsOfe);
-//     }
-//     // xếp sắp giảm dần theo Date
-//     posts.sort((a, b) => {
-//       return new Date(b.createdAt) - new Date(a.createdAt);
-//     });
-//     // result
-//     res.status(200).json({ "status": true, "posts": posts });
-//   } catch (e) {
-//     res.status(400).json({ "status": false, "message": "lỗi API" });
-//   }
-// });
+router.get('/getHome', checkToken, async function (req, res, next) {
+  try {
+    const { userId } = req.body;
+    // get friends in user
+    const listUsers = await userController.getFriendsInUser(userId);
+    listUsers.push(userId);
+    //console.log(listUsers);
+    // get posts of listUsers
+    var posts = new Array();
+    // async/await ko dùng đc trong foEach 
+    // nên phải dùng for ... of
+    for (const item of listUsers) {
+      let postsOfe = await postController.getPostsUserIdDestroyFalse(item);
+      // nối arr lại vs nhau
+      posts = posts.concat(postsOfe);
+    }
+    // xếp sắp giảm dần theo Date
+    posts.sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+    // result
+    res.status(200).json({ "status": true, "posts": posts });
+  } catch (e) {
+    res.status(400).json({ "status": false, "message": "lỗi API" });
+  }
+});
 
 
 module.exports = router;
