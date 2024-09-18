@@ -90,8 +90,9 @@ router.post("/refreshToken", async function (req, res, next) {
 //http://localhost:3000/user/addUser
 router.post('/addUser', async function (req, res, next) {
   try {
-    const body = req.body;
-    const result = await userController.addUser(body);
+    const { email, password, displayName } = req.body;
+    const result = await userController.addUser(email, password, displayName);
+
     if (result) {
       res.status(200).json({ "status": true, "message": "Đăng kí thành công" });
     } else {
