@@ -60,9 +60,9 @@ async function getUsersDisplayName(displayName) {
     }
 }
 
-async function addUser(body) {
+async function addUser(email, password, displayName) {
     try {
-        const { email, password, displayName } = body;
+
         var hashPass = bcrypt.hashSync(password, 10);
         const newItem = { email, password: hashPass, displayName, role: 3 };
         if (newItem) {
@@ -74,9 +74,8 @@ async function addUser(body) {
         return false;
     }
 }
-async function addAdmin(body) {
+async function addAdmin(email, password, displayName) {
     try {
-        const { email, password, displayName } = body;
         var hashPass = bcrypt.hashSync(password, 10);
         const newItem = { email, password: hashPass, displayName, role: 1 };
         if (newItem) {
@@ -88,9 +87,8 @@ async function addAdmin(body) {
         return false;
     }
 }
-async function addManage(body) {
+async function addManage(email, password, displayName) {
     try {
-        const { email, password, displayName } = body;
         var hashPass = bcrypt.hashSync(password, 10);
         const newItem = { email, password: hashPass, displayName, role: 2 };
         if (newItem) {

@@ -108,8 +108,8 @@ router.post('/addUser', async function (req, res, next) {
 //http://localhost:3000/user/addAdmin
 router.post('/addAdmin', async function (req, res, next) {
   try {
-    const body = req.body;
-    const result = await userController.addAdmin(body);
+    const { email, password, displayName } = req.body;
+    const result = await userController.addAdmin(email, password, displayName);
     if (result) {
       res.status(200).json({ "status": true, "message": "Đăng kí thành công" });
     } else {
@@ -124,8 +124,8 @@ router.post('/addAdmin', async function (req, res, next) {
 //http://localhost:3000/user/addManage
 router.post('/addManage', async function (req, res, next) {
   try {
-    const body = req.body;
-    const result = await userController.addManage(body);
+    const { email, password, displayName } = req.body;
+    const result = await userController.addManage(email, password, displayName);
     if (result) {
       res.status(200).json({ "status": true, "message": "Đăng kí thành công" });
     } else {
@@ -243,28 +243,28 @@ router.get('/getAllUsers', checkToken, async function (req, res, next) {
 
 //get role user
 //http://localhost:3000/user/getRoleUser
-router.get('/getRoleUser', checkToken, async function (req, res, next) {
-  try {
-    const list = await userController.getRoleUser();
-    res.status(200).json({ "status": true, "users": list });
-  } catch (e) {
-    res.status(400).json({ "status": false, "message": "lỗi" });
-  }
-});
+// router.get('/getRoleUser', checkToken, async function (req, res, next) {
+//   try {
+//     const list = await userController.getRoleUser();
+//     res.status(200).json({ "status": true, "users": list });
+//   } catch (e) {
+//     res.status(400).json({ "status": false, "message": "lỗi" });
+//   }
+// });
 
 
 //get Users DisplayName (search)
 //http://localhost:3000/user/getUsersDisplayName
-router.get('/getUsersDisplayName', checkToken, async function (req, res, next) {
-  try {
-    const { displayName } = req.body;
-    const list = await userController.getUsersDisplayName(displayName);
-    res.status(200).json({ "status": true, "users": list });
+// router.get('/getUsersDisplayName', checkToken, async function (req, res, next) {
+//   try {
+//     const { displayName } = req.body;
+//     const list = await userController.getUsersDisplayName(displayName);
+//     res.status(200).json({ "status": true, "users": list });
 
-  } catch (e) {
-    res.status(400).json({ "status": false, "message": "lỗi" });
-  }
-});
+//   } catch (e) {
+//     res.status(400).json({ "status": false, "message": "lỗi" });
+//   }
+// });
 
 /**
  * @swagger
