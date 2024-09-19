@@ -7,12 +7,6 @@ const post = new Schema({
         type: ObjectId,
         ref: 'user',
     },
-    // displayName: {
-    //     type: String, // kiểu dữ liệu
-    // },
-    // avatar: {
-    //     type: String, // kiểu dữ liệu
-    // },
     content: {
         type: String, // kiểu dữ liệu
         default: null

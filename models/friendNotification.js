@@ -13,14 +13,6 @@ const friendNotification = new Schema({
         ref: 'user',
         required: true, // bắt buộc phải có
     },
-    displayName: {
-        type: String, // kiểu dữ liệu
-        required: true, // bắt buộc phải có
-    },
-    avatar: {
-        type: String, // kiểu dữ liệu
-        default: null,
-    },
     state: {
         type: Boolean, // kiểu dữ liệu
         default: false
