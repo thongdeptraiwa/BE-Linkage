@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const friendNotificationController = require("../controllers/friendNotificationController")
+//const friendNotificationController = require("../controllers/friendNotificationController")
 const userController = require("../controllers/userController")
 
 //checkToken

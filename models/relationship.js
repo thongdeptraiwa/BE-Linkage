@@ -14,30 +14,42 @@ const relationship = new Schema({
         required: true, // bắt buộc phải có
     },
     send: {
+        type: Number, // kiểu dữ liệu
+        // -1 ng nhan
+        // 0  ko ai gui ai
+        // 1 ng gui
+    },
+    statusSend: {
         type: Boolean, // kiểu dữ liệu
-        // true ( A gửi lời mời kết bạn )
+        default: true, //mặc định
+        // true ( chưa đọc lời mời )
+        // false ( đọc lời mời rồi )
+    },
+    sendedAt: {
+        type: Date, // kiểu dữ liệu
+        default: null
     },
     friend: {
         type: Boolean, // kiểu dữ liệu
     },
+    friendedAt: {
+        type: Date, // kiểu dữ liệu
+        default: null
+    },
     follow: {
         type: Boolean, // kiểu dữ liệu
+    },
+    followedAt: {
+        type: Date, // kiểu dữ liệu
+        default: null
     },
     block: {
         type: Number, // kiểu dữ liệu
         // -1 bị khoá
-        // 0  bth
+        // 0  ko ai block ai
         // 1 ng khoá
     },
-    sendAt: {
-        type: Date, // kiểu dữ liệu
-        default: null
-    },
-    friendAt: {
-        type: Date, // kiểu dữ liệu
-        default: null
-    },
-    blockAt: {
+    blockedAt: {
         type: Date, // kiểu dữ liệu
         default: null
     },

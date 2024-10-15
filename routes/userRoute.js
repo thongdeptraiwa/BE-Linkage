@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const userController = require("../controllers/userController");
-const friendNotificationController = require("../controllers/friendNotificationController")
+//const friendNotificationController = require("../controllers/friendNotificationController")
 
 //token
 const JWT = require('jsonwebtoken');
@@ -243,14 +243,14 @@ router.get('/getAllUsers', checkToken, async function (req, res, next) {
 
 //get role user
 //http://localhost:3000/user/getRoleUser
-// router.get('/getRoleUser', checkToken, async function (req, res, next) {
-//   try {
-//     const list = await userController.getRoleUser();
-//     res.status(200).json({ "status": true, "users": list });
-//   } catch (e) {
-//     res.status(400).json({ "status": false, "message": "lỗi" });
-//   }
-// });
+router.get('/getRoleUser', checkToken, async function (req, res, next) {
+  try {
+    const list = await userController.getRoleUser();
+    res.status(200).json({ "status": true, "users": list });
+  } catch (e) {
+    res.status(400).json({ "status": false, "message": "lỗi" });
+  }
+});
 
 
 //get Users DisplayName (search)

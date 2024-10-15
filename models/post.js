@@ -24,11 +24,11 @@ const post = new Schema({
     },
     likes: [{
         type: ObjectId,
-        ref: 'user',
+        ref: 'interation',
     }],
     comments: [{
         type: ObjectId,
-        ref: 'comment',
+        ref: 'interation',
     }],
     createdAt: {
         type: Date, // kiểu dữ liệu
