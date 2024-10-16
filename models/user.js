@@ -29,6 +29,7 @@ const user = new Schema({
     },
     role: {
         type: Number, // kiểu dữ liệu
+        // 0: user bi khoa
         // 1: admin 
         // 2: manage
         // 3: user
